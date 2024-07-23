@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL ='https://invoice-management-1.onrender.com/api/auth';
+const API_URL ='https://invoice-management-7vxz.onrender.com/api/auth';
 
 // Set up Axios with default headers
 const api = axios.create({
