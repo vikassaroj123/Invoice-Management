@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/invoices';
+const API_URL = 'https://invoice-management-1.onrender.com/api/invoices';
 
 // Set up Axios with default headers
 const api = axios.create({
