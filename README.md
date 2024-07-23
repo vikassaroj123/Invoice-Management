@@ -1,6 +1,3 @@
-Sure! Here’s a complete README file including all necessary details:
-
-```markdown
 # Invoice Management System
 
 ## Project Description
@@ -26,7 +23,7 @@ The Invoice Management System is a full-stack web application built using the ME
 
 - **Deployment:**
   - Vercel (Frontend)
-  - Render (Backend)
+  - Heroku (Backend)
 
 ## Setup Instructions for Running the Project Locally
 
@@ -43,7 +40,7 @@ The Invoice Management System is a full-stack web application built using the ME
    ```bash
    git clone https://github.com/yourusername/invoice-management-system.git
    cd invoice-management-system/backend
-   ```
+
 
 2. **Install the Required Packages:**
 
