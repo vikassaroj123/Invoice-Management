@@ -38,7 +38,7 @@ The Invoice Management System is a full-stack web application built using the ME
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/invoice-management-system.git
+   git clone [https://github.com/yourusername/invoice-management-system.git](https://github.com/vikassaroj123/Invoice-Management)
    cd invoice-management-system/backend
 
 
