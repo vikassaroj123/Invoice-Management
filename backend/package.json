@@ -3,23 +3,22 @@
     "version": "1.0.0",
     "main": "server.js",
     "scripts": {
-      "start": "node src/server.js",
-      "dev": "nodemon src/server.js",
-      "build": "echo 'No build step necessary'"
+        "start": "node src/server.js",
+        "dev": "npx nodemon src/server.js",
+        "build": "echo 'No build step necessary'"
     },
     "dependencies": {
-      "bcryptjs": "^2.4.3",
-      "cors": "^2.8.5",
-      "dotenv": "^8.6.0",
-      "expess": "^0.0.1-security",
-      "express": "^4.19.2",
-      "jsonwebtoken": "^8.5.1",
-      "mongoose": "^5.13.22",
-      "pdfkit": "^0.11.0",
-      "stream": "^0.0.3"
+        "bcryptjs": "^2.4.3",
+        "cors": "^2.8.5",
+        "dotenv": "^8.6.0",
+        "expess": "^0.0.1-security",
+        "express": "^4.19.2",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.13.22",
+        "pdfkit": "^0.11.0",
+        "stream": "^0.0.3"
     },
     "devDependencies": {
-      "nodemon": "^2.0.4"
+        "nodemon": "^2.0.22"
     }
-  }
-  
+}
