@@ -23,7 +23,7 @@ The Invoice Management System is a full-stack web application built using the ME
 
 - **Deployment:**
   - Vercel (Frontend)
-  - Heroku (Backend)
+  - Render (Backend)
 
 ## Setup Instructions for Running the Project Locally
 
