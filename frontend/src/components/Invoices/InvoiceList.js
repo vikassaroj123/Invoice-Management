@@ -26,70 +26,110 @@ const InvoiceList = () => {
   }, []);
 
   const handleDownload = async (invoiceId) => {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+      alert('Authentication token is missing. Please log in again.');
+      return;
+    }
+    
     try {
-      const response = await fetch(`/api/invoices/${invoiceId}/pdf`, {
+      // Construct the full URL for the request
+      const url = `https://invoice-management-7vxz.onrender.com/api/invoices/${invoiceId}/pdf`;
+      // Perform the fetch request with correct headers
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Accept': 'application/pdf',
-        },
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
       });
-
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `invoice-${invoiceId}.pdf`);
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      } else {
-        console.error('Failed to download PDF:', response.statusText);
-        alert('Failed to download PDF. Please try again later.');
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+  
+      // Handle the response to create and click a download link
+      const blob = await response.blob();
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.setAttribute('download', `invoice-${invoiceId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(downloadUrl);
     } catch (error) {
       console.error('Error downloading PDF:', error);
-      alert('An error occurred while downloading the PDF. Please try again later.');
+      alert(`Failed to download PDF: ${error.message}`);
     }
-  };
-
+  };  
+  
   const handleEdit = (invoice) => {
     setSelectedInvoice(invoice);
     setIsModalOpen(true);
   };
 
   const handleDelete = async (invoiceId) => {
-    const confirm = window.confirm('Are you sure you want to delete this invoice?');
-    if (confirm) {
-      try {
-        await invoiceService.deleteInvoice(invoiceId);
-        alert('Invoice deleted successfully!');
-        fetchInvoices(); // Refresh the list after deletion
-      } catch (error) {
-        console.error('Error deleting invoice:', error);
-        alert('Error deleting invoice. Please try again later.');
+    const API_URL = `https://invoice-management-7vxz.onrender.com/api/invoices/${invoiceId}`;
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      alert('Authentication token is missing. Please log in again.');
+      return;
+    }
+  
+    try {
+      const response = await fetch(API_URL, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+  
+      // Remove the deleted invoice from the list
+      setInvoices(invoices.filter(invoice => invoice._id !== invoiceId));
+      alert('Invoice deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting invoice:', error);
+      alert(`Failed to delete invoice: ${error.message}`);
     }
   };
-
+  
   const handleModalClose = () => {
     setIsModalOpen(false);
     setSelectedInvoice(null);
   };
 
-  const handleUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      await invoiceService.updateInvoice(selectedInvoice._id, selectedInvoice);
-      alert('Invoice updated successfully!');
-      fetchInvoices();
-      handleModalClose();
-    } catch (error) {
-      console.error('Error updating invoice:', error);
-      alert('Error updating invoice. Please try again later.');
-    }
-  };
+ // Example implementation in invoiceService.js
+const handleUpdate = async (invoiceId, invoiceData) => {
+  const token = localStorage.getItem('token');
+  
+  if (!token) {
+    throw new Error('Authentication token is missing.');
+  }
+  
+  const response = await fetch(`https://invoice-management-7vxz.onrender.com/api/invoices/${invoiceId}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(invoiceData)
+  });
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  
+  return response.json();
+};
+
 
   return (
     <div className="max-w-7xl mx-auto p-8 bg-gradient-to-r from-blue-50 to-white rounded-lg shadow-lg">
